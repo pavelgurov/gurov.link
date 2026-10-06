@@ -9,6 +9,10 @@
   var nerds = document.getElementById('nerds');
   var nerdsBtn = document.getElementById('nerds-btn');
   var START = 2007, END = 2026;
+
+  // Marker positions come from data-at (inline style attributes are blocked by the CSP)
+  marks.forEach(function (m) { m.style.left = m.dataset.at; });
+  function at(m) { return parseFloat(m.dataset.at) / 100; }
   var pos = 0, timer = null;
 
   function setPos(p) {
@@ -16,7 +20,7 @@
     fill.style.width = (pos * 100) + '%';
     time.textContent = Math.round(START + pos * (END - START)) + ' / ' + END;
     marks.forEach(function (m) {
-      m.classList.toggle('on', parseFloat(m.style.getPropertyValue('--at')) / 100 <= pos + 0.001);
+      m.classList.toggle('on', at(m) <= pos + 0.001);
     });
   }
 
@@ -35,8 +39,7 @@
     timer = setInterval(function () {
       setPos(pos + 0.004);
       marks.forEach(function (m) {
-        var at = parseFloat(m.style.getPropertyValue('--at')) / 100;
-        if (at <= pos && !visited[m.hash]) {
+        if (at(m) <= pos && !visited[m.hash]) {
           visited[m.hash] = true;
           var target = document.querySelector(m.hash);
           if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -50,7 +53,7 @@
 
   // Scrub by clicking the bar; clicking a marker jumps to the chapter
   bar.addEventListener('click', function (e) {
-    if (e.target.classList.contains('mark')) { stop(); setPos(parseFloat(e.target.style.getPropertyValue('--at')) / 100); return; }
+    if (e.target.classList.contains('mark')) { stop(); setPos(at(e.target)); return; }
     stop();
     var r = bar.getBoundingClientRect();
     setPos((e.clientX - r.left) / r.width);

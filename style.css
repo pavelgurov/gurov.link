@@ -113,7 +113,7 @@ img { display: block; max-width: 100%; height: auto; }
 .bar::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; background: rgba(255,255,255,.15); border-radius: 2px; }
 .fill { position: absolute; left: 0; top: 50%; height: 4px; margin-top: -2px; width: 0; background: var(--signal); border-radius: 2px; transition: width .2s linear; }
 .mark {
-  position: absolute; left: var(--at); top: 50%; width: 1rem; height: 1rem; margin: -.5rem 0 0 -.5rem;
+  position: absolute; top: 50%; width: 1rem; height: 1rem; margin: -.5rem 0 0 -.5rem;
   border-radius: 50%; background: var(--panel-2); border: 2px solid var(--muted);
 }
 .mark:hover, .mark.on { border-color: var(--signal); background: var(--signal); }
